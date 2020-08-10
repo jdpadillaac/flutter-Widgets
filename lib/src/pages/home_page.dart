@@ -1,3 +1,4 @@
+import 'package:components/src/pages/alert_page.dart';
 import 'package:components/src/providers/menu_provider.dart';
 import 'package:components/src/utils/icons_string.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class HomePage extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snp) {
         print(snp.data);
         return ListView(
-          children: _listaItems(snp.data),
+          children: _listaItems(snp.data, context),
         );
       },
     );
@@ -37,7 +38,7 @@ class HomePage extends StatelessWidget {
     // );
   }
 
-  List<Widget> _listaItems(List<dynamic> data) {
+  List<Widget> _listaItems(List<dynamic> data, BuildContext context) {
     final List<Widget> opts = [];
 
     data.forEach((element) {
@@ -45,7 +46,13 @@ class HomePage extends StatelessWidget {
         title: Text(element['texto']),
         leading: getIcon(element['icon']),
         trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blueGrey),
-        onTap: () {},
+        onTap: () {
+          // Esta opcion es solo para ir a un ruta, ya que no es de manera dinamica
+          final route = MaterialPageRoute(builder: (context) {
+            return AlertPage();
+          });
+          Navigator.push(context, route);
+        },
       );
 
       opts..add(widgetsTemp)..add(Divider());
