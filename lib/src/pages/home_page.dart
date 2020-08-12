@@ -1,4 +1,3 @@
-import 'package:components/src/pages/alert_page.dart';
 import 'package:components/src/providers/menu_provider.dart';
 import 'package:components/src/utils/icons_string.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,6 @@ class HomePage extends StatelessWidget {
       future: menuProvider.cargarData(),
       initialData: [],
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snp) {
-        print(snp.data);
         return ListView(
           children: _listaItems(snp.data, context),
         );
@@ -47,11 +45,12 @@ class HomePage extends StatelessWidget {
         leading: getIcon(element['icon']),
         trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blueGrey),
         onTap: () {
-          // Esta opcion es solo para ir a un ruta, ya que no es de manera dinamica
-          final route = MaterialPageRoute(builder: (context) {
-            return AlertPage();
-          });
-          Navigator.push(context, route);
+          Navigator.pushNamed(context, element['ruta']);
+          // Esta opcion es solo para ir a un ruta, ya que NO es de manera dinamica
+          // final route = MaterialPageRoute(builder: (context) {
+          //   return AlertPage();
+          // });
+          // Navigator.push(context, route);
         },
       );
 

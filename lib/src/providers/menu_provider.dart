@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 class _MenuProvider {
   List<dynamic> options = [];
 
-  _MenuProvider() {}
+  _MenuProvider();
 
   Future<List<dynamic>> cargarData() async {
     final resp = await rootBundle.loadString('uploads/menu_opts.json');
