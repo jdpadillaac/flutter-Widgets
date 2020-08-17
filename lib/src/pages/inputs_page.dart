@@ -10,7 +10,10 @@ class InputsPage extends StatefulWidget {
 class _InputsPageState extends State<InputsPage> {
   String _nombre = 'Inputs';
   String _fecha = '';
+  String _optsSelected = 'Volar';
   TextEditingController _inputFiledDateController = new TextEditingController();
+
+  List<String> _poderes = ['Volar', 'Rayos x'];
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,9 @@ class _InputsPageState extends State<InputsPage> {
           Divider(),
           _crearPassword(),
           Divider(),
-          _crearFecha(context)
+          _crearFecha(context),
+          Divider(),
+          _crearDropDown()
         ],
       ),
     );
@@ -36,7 +41,7 @@ class _InputsPageState extends State<InputsPage> {
 
   Widget _crearInput() {
     return TextField(
-      autofocus: true,
+      autofocus: false,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.2)),
@@ -62,7 +67,7 @@ class _InputsPageState extends State<InputsPage> {
   Widget _crearEmail() {
     return TextField(
       keyboardType: TextInputType.emailAddress,
-      autofocus: true,
+      autofocus: false,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.2)),
@@ -84,7 +89,7 @@ class _InputsPageState extends State<InputsPage> {
   Widget _crearPassword() {
     return TextField(
       obscureText: true,
-      autofocus: true,
+      autofocus: false,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.2)),
@@ -106,7 +111,7 @@ class _InputsPageState extends State<InputsPage> {
     return TextField(
       controller: _inputFiledDateController,
       enableInteractiveSelection: false,
-      autofocus: true,
+      autofocus: false,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.2)),
@@ -138,5 +143,32 @@ class _InputsPageState extends State<InputsPage> {
         _inputFiledDateController.text = _fecha;
       });
     }
+  }
+
+  List<DropdownMenuItem<String>> getOptsDropDown() {
+    List<DropdownMenuItem<String>> lista = new List();
+    _poderes.forEach((element) {
+      lista.add(DropdownMenuItem(child: Text(element), value: element));
+    });
+    return lista;
+  }
+
+  Widget _crearDropDown() {
+    return Row(
+      children: [
+        Icon(Icons.select_all),
+        SizedBox(width: 28.5),
+        Expanded(
+          child: DropdownButton(
+              value: _optsSelected,
+              items: getOptsDropDown(),
+              onChanged: (opt) {
+                setState(() {
+                  _optsSelected = opt;
+                });
+              }),
+        )
+      ],
+    );
   }
 }
