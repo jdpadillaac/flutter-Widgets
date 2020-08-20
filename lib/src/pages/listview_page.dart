@@ -45,15 +45,19 @@ class _ListViewState extends State<ListViewPage> {
   }
 
   Widget _crearLista() {
-    return ListView.builder(
-      controller: _scrolController,
-      itemCount: _liostaNumeros.length,
-      itemBuilder: (BuildContext context, index) {
-        final imagen = _liostaNumeros[index];
-        return FadeInImage(
-            placeholder: AssetImage('assets/jar-loading.gif'),
-            image: NetworkImage('https://picsum.photos/500/300?image=$imagen'));
-      },
+    return RefreshIndicator(
+      onRefresh: _obtenerPagina1,
+      child: ListView.builder(
+        controller: _scrolController,
+        itemCount: _liostaNumeros.length,
+        itemBuilder: (BuildContext context, index) {
+          final imagen = _liostaNumeros[index];
+          return FadeInImage(
+              placeholder: AssetImage('assets/jar-loading.gif'),
+              image:
+                  NetworkImage('https://picsum.photos/500/300?image=$imagen'));
+        },
+      ),
     );
   }
 
@@ -99,5 +103,17 @@ class _ListViewState extends State<ListViewPage> {
     } else {
       return Container();
     }
+  }
+
+  Future<void> _obtenerPagina1() async {
+    final duration = new Duration(seconds: 2);
+
+    new Timer(duration, () {
+      _liostaNumeros.clear();
+      _ultimoNumero++;
+      _agregarDiez();
+    });
+
+    return Future.delayed(duration);
   }
 }
